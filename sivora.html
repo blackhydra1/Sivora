@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sivora Token - Decentralized Finance Future</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            color: var(--light);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .menu-btn {
+            background: var(--primary);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .menu-line {
+            width: 30px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+            margin: 5px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: var(--primary);
+            transform: translateX(10px);
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin: 40px 0;
+            color: var(--secondary);
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Tokenomics */
+        .tokenomics-grid {
+            display: grid;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .token-item {
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+            background: rgba(255,255,255,0.03);
+            transition: all 0.3s ease;
+        }
+
+        .token-item:hover {
+            transform: translateX(10px);
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: grid;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .phase {
+            padding: 25px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .phase:hover {
+            transform: scale(1.02);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-container">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div class="menu-line"></div>
+            <div class="menu-line"></div>
+            <div class="menu-line"></div>
+        </div>
+        <div class="nav-links">
+            <a href="#home" onclick="scrollToSection('home')">Home</a>
+            <a href="#about" onclick="scrollToSection('about')">About</a>
+            <a href="#tokenomics" onclick="scrollToSection('tokenomics')">Tokenomics</a>
+            <a href="#resources" onclick="scrollToSection('resources')">Resources</a>
+            <a href="#community" onclick="scrollToSection('community')">Community</a>
+        </div>
+    </div>
+
+    <!-- Home Section -->
+    <section id="home" class="section">
+        <h1>Sivora Token (SIV) – The Future of Decentralized Finance</h1>
+        <h3>Built on Solana for Speed, Security, and Scalability.</h3>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>⚡ Lightning-Fast Transactions</h3>
+                <p>Thanks to Solana's high-speed blockchain</p>
+            </div>
+            <div class="card">
+                <h3>💸 Low Transaction Fees</h3>
+                <p>Enjoy near-zero gas fees</p>
+            </div>
+            <div class="card">
+                <h3>🔒 Secure & Scalable</h3>
+                <p>Built on robust blockchain architecture</p>
+            </div>
+            <div class="card">
+                <h3>🌐 Community-Driven</h3>
+                <p>Decentralized governance for the people</p>
+            </div>
+            <div class="card">
+                <h3>🔗 Multi-Network Support</h3>
+                <p>Available on Solana, Ethereum & Binance Smart Chain</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="https://gateway.pinata.cloud/ipfs/bafkreifojlxozijorgwjdkwc4yhqdoi34klzkylqwyrijbsexcodfyqkke" 
+               class="btn btn-primary" target="_blank">
+                📖 Read Whitepaper
+            </a>
+            <a href="https://solscan.io" class="btn btn-primary" target="_blank">
+                🔍 Explore Blockchain
+          </a>
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2>About Sivora</h2>
+        <div class="card">
+            <h3>What is Sivora?</h3>
+            <p>Sivora (SIV) is a next-generation cryptocurrency built on the Solana blockchain, designed for ultra-fast transactions, low fees, and high security. With multi-chain support for Solana, Ethereum, and Binance Smart Chain, Sivora aims to revolutionize decentralized finance (DeFi) by providing seamless cross-chain transactions and DeFi integrations.</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>🚀 Our Vision</h3>
+                <p>At Sivora, we believe in a decentralized future where financial systems are transparent, secure, and accessible to all. Our goal is to create an ecosystem that empowers users, developers, and businesses to transact, stake, and build without barriers.</p>
+            </div>
+            <div class="card">
+                <h3>🎯 
+Why Choose Sivora?</h3>
+                <ul>
+<div style="text-align: left;">
+                    <li>Speed & Efficiency: Solana-powered blockchain ensures near-instant transactions</li>
+                    <li>Low-Cost Transactions: Enjoy minimal gas fees</li>
+                    <li>Security & Scalability: Cutting-edge blockchain architecture</li>
+                    <li>Community-Driven: Users shape the future</li>
+                    <li>Cross-Chain Compatibility: Solana, Ethereum & BSC</li>
+       </ul>
+      </section>
+<!-- Tokenomics Section -->
+    <section id="tokenomics" class="section">
+        <h2>Tokenomics</h2>
+        <div class="tokenomics-grid">
+            <div class="token-item">
+                <h3>🪙 Total Supply: 101,000,000 SIV</h3>
+            </div>
+            <div class="token-item">
+                <h3>✅ Circulating Supply – 30% (30,000,000 SIV)</h3>
+                <p>Market me available tokens jo trading aur transactions ke liye use honge.</p>
+            </div>
+            <div class="token-item">
+                <h3>💧 Liquidity Provision – 30% (30,000,000 SIV)</h3>
+                <p>Market stability aur smooth trading ensure karne ke liye liquidity pools me lock kiya gaya supply.</p>
+            </div>
+            <div class="token-item">
+                <h3>👨💻 Team Allocation – 15% (15,000,000 SIV)</h3>
+                <p>Project ke developers aur core team ke incentives aur growth ke liye.</p>
+            </div>
+            <div class="token-item">
+                <h3>🏦 Reserve Fund – 15% (15,000,000 SIV)</h3>
+                <p>Future project development, partnerships aur emergency needs ke liye.</p>
+            </div>
+            <div class="token-item">
+                <h3>🔥 Staking Rewards – 10% (10,000,000 SIV)</h3>
+                <p>Users ko passive income earn karne ka mauka jo apne SIV tokens stake karenge.</p>
+            </div>
+            <div class="token-item">
+                <h3>📌 Remaining Supply – 1% (1,000,000 SIV)</h3>
+                <p>Future needs ya strategic airdrops/distribution ke liye reserve.</p>
+    </section>
+<p style="margin-bottom: 0;">
+  <!-- Resources Section -->
+<div style="text-align: left;">
+    <section id="resources" class="section">
+        <h2>Resources</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>📚 FAQs</h3>
+               <br> <p><strong>What is Sivora Token (SIV)?</strong><br>
+                A next-gen cryptocurrency on Solana blockchain focusing on decentralization.</p>
+<br>
+                <p><strong>How to buy?</strong><br>
+                Purchase on DEXs supporting Solana assets using Phantom/Solflare wallets.</p>
+            </div>
+            <div class="card">
+                <h3>🛠️ Wallet Setup</h3>
+                <p>1. Download Phantom/Solflare<br>
+                2. Create wallet & secure recovery phrase<br>
+                3. Fund with SOL from exchanges</p>
+            </div>
+            <div class="card">
+                <h3>🔒 Security Tips</h3>
+                <p>• Use hardware wallets<br>
+                • Never share recovery phrase<br>
+                • Verify official links</p>
+           </section>
+<p style="margin-bottom: 0;">
+    <!-- Community Section -->
+    <section id="community" class="section">
+        <h2>Community</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🚀 Use Cases</h3>
+                <ul>
+<div style="text-align: left;">
+<li>Fast & Cheap Payments</li>
+<li>Staking Rewards</li>
+<li>Cross-Chain Transactions</li>
+<li>DeFi Integration</li>
+                </ul>
+            </div>
+<div style="text-align: left;">
+            <div class="card">
+                <h3>📅 Roadmap</h3>
+                <div class="roadmap">
+                    <div class="phase">
+                        <h4>🚀Phase 1: Launch & Foundation (Q1 2025)</h4>
+                        <p>• Token creation & deployment<br>
+                        • Website & whitepaper release</p>
+                    </div>
+                    <div class="phase">
+                        <h4>🌍Phase 2: Expansion (Q2 2025)</h4>
+                        <p>• DEX listings<br>
+                        • Marketing campaigns</p>
+                    </div>
+                    <div class="phase">
+                        <h4>💎Phase 3: Utility (Q3-Q4 2025)</h4>
+                        <p>• Staking program launch<br>
+                        • Multi-chain support</p>
+                    </div>
+                    <div class="phase">
+                        <h4>🔥Phase 4: Global Growth (2026+)</h4>
+                        <p>• CEX listings<br>
+                        • Real-world adoption</p>
+                    </div>
+<div style="text-align: left;">
+               <h3>Join Sivora Community</h3>
+ </div>
+ <div class="join sivora community">
+                    <div class="phase">
+                        <h4>🚀 Be a part of the decentralized revolution! Stay connected for updates, partnerships, and upcoming innovations.)</h4>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+   
+
+ <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sivora Token</title>
+  <style>
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+    }
+
+    .social-link img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .social-link a {
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="social-links">
+    <!-- Telegram -->
+    <div class="social-link">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/2048px-Telegram_2019_Logo.svg.png" alt="Telegram">
+      <a href="https://t.me/sivoratoken" target="_blank"></a>
+    </div>
+
+    <!-- GitHub -->
+    <div class="social-link">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
+      <a href="https://github.com/sivora/Sivora" target="_blank"></a>
+    </div>
+  </div>
+
+<br>
+        <p>©️ 2024 Sivora Token. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+            if(window.innerWidth <= 768) toggleMenu();
+        }
+
+        // Animate sections on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navContainer = document.querySelector('.nav-container');
+            if (!navContainer.contains(event.target)) {
+                document.querySelector('.nav-links').classList.remove('active');
+            }
+        });
+
+        // Activate home section initially
+        document.getElementById('home').classList.add('active');
+    </script>
+
+</body>
+</html>
